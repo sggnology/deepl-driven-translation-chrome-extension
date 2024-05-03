@@ -1,0 +1,6 @@
+{
+    "name": "DeepL 기반 번역기",
+    "description": "DeepL Driven Translating Tool",
+    "version": "1.0",
+    "manifest_version": 3
+}
