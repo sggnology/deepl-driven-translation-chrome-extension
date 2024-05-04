@@ -5,6 +5,14 @@ function handleMouseSelection(event) {
     // 선택된 텍스트를 가져옵니다.
     const selectedText = window.getSelection().toString();
 
+    chrome.storage.sync.get('apiKey', function(data) {
+
+        if(data.apiKey == null || data.apiKey == undefined){
+            selectedText = "API KEY 를 입력하여주세요.";
+        }
+
+    });
+
     // selectedText trim
     const trimmedSelectedText = selectedText.trim();
 
