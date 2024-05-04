@@ -12,6 +12,39 @@ function handleMouseSelection(event) {
 
     if (trimmedSelectedText !== "" && trimmedSelectedText !== null) {
 
+        // const xhr = new XMLHttpRequest();
+        // xhr.open('POST', url, true);
+        // xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        // xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+        // xhr.onreadystatechange = function() {
+        //     if (xhr.readyState === 4 && xhr.status === 200) {
+        //         const data = JSON.parse(xhr.responseText);
+        //         // 번역된 결과값들
+        //         const translatedCandidates = data?.result?.translations?.beams;
+        //         let resultText = "";
+
+        //         // 번역 응답 API 에 문제가 발생했을 경우
+        //         if(translatedCandidates == null){
+        //             resultText = "번역에 실패하였습니다.";
+        //         }
+        //         // 번역된 결과가 없을 경우
+        //         else if(translatedCandidates.length == 0){
+        //             resultText = "번역된 결과가 없습니다.";
+        //         }
+        //         // 번역이 되었을 경우
+        //         else{
+
+        //             // 첫번째 값을 번역된 결과로 서빙
+        //             resultText = translatedCandidates[0]?.sentences[0]?.text;
+        //         }
+
+        //         addBalloon(selectedText);
+        //     } else if (xhr.readyState === 4) {
+        //         // 번역 API 요청 오류 발생시
+        //         addBalloon("번역 요청 과정에서 오류가 발생하였습니다.");
+        //     }
+        // };
+        // xhr.send(JSON.stringify(body));
         fetch(url, {
             mode: 'cors',
             method: 'POST',
