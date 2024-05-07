@@ -1,4 +1,4 @@
-# deepl-driven-translation-chrome-extension
+# translation-chrome-extension
 > ~~DeepL API 기반의 번역기~~
 
 ## 제한사항
