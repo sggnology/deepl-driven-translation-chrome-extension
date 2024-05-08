@@ -1,6 +1,6 @@
 {
-    "name": "DeepL 기반 번역기",
-    "description": "DeepL Driven Translating Tool",
+    "name": "한/영 번역기",
+    "description": "Korea/English Translating Tool",
     "version": "1.0",
     "manifest_version": 3,
     "permissions": [
