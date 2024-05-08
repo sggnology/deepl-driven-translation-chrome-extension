@@ -1,26 +1,20 @@
 # translation-chrome-extension
-> ~~DeepL API 기반의 번역기~~
+> 문서를 읽다보면 단어 혹은 문장이 어려운 경우가 있습니다.   
+> 그럴 때 마다 검색하는 것이 번거로워 chrome extension 으로 제작하였습니다.
 
 ## 제한사항
-- DeepL Open API 의 무료 기간은 한달로 각 사용자가 편하게 사용하기에는 무리가 있다.
+- 현재는 CORS 회피를 위해 cloudflare > worker 를 사용하여 일별 요청 제한이 있습니다.
+   - 추후 사용자가 많아진다면 사설 server 로 이관할 생각입니다.
 
----
+### 사용 설명
 
-## 방향성 전환
+#### 번역 활성화 여부 선택
 
-> PostMan 을 통해 확인하여 동작 여부를 확인하였다.
+| popup 을 통해 활성화 여부를 선택할 수 있습니다.
 
-- DeepL 제공하는 API 가 아닌 네트워킹 소스를 통해 DeepL 웹페이지에서 사용하는 API 를 사용
-- 응답에 대한 parsing 과정 필요
 
-### 보류
-- CORS 를 해결하지 못하였다.
-   - 시도
-      1. fetch mode 변경
-         - Content-Type 을 Browser 가 강제로 변경하여 415 오류 발생
-      2. XMLHttpRequest 방식으로 변경
-         - `Access-Control-Allow-Origin: *` 헤더를 추가하였으나 실패
-         - `Origin: ..` 헤더를 추가하였으나, Browser 측에서 삭제함으로 실패
-   - 해결책
-      1. Proxy Server 를 통해 중개서버를 생성
-         - GCP 인스턴스 사용하려 했으나 3개월 무료정책 및 과한 요청시 요금 부하로 추후 처리
+#### 커서를 통한 번역
+
+| 원하는 단어/문장위에 커서를 올리게 되면 번역이 됩니다.
+
+
