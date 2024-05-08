@@ -2,16 +2,30 @@
 
 // 마우스 이벤트를 감지하고 처리하는 함수
 function handleMouseSelection(event) {
+
+    // ON/OFF 상태를 가져옵니다.
+    chrome.storage.sync.get("activeState", (data) => {
+        if (data.activeState === "active") {
+            // active 상태일 때만 번역을 실행합니다.
+            translateText();
+        }
+        else{
+            return;
+        }
+    });
+}
+
+function translateText() {
     // 선택된 텍스트를 가져옵니다.
     let selectedText = window.getSelection().toString();
 
     const url = `https://translation-proxy.sggnology.workers.dev`;
-    
+
     const trimmedSelectedText = selectedText.trim();
 
     if (trimmedSelectedText !== "" && trimmedSelectedText !== null) {
 
-        const body = {"source": trimmedSelectedText};
+        const body = { "source": trimmedSelectedText };
 
         fetch(url, {
             mode: 'cors',
@@ -21,36 +35,36 @@ function handleMouseSelection(event) {
             },
             body: JSON.stringify(body)
         })
-        .then(response => response.json())
-        .then(data => {
+            .then(response => response.json())
+            .then(data => {
 
-            // 번역된 결과값들
-            const translatedCandidates = data?.translation;
+                // 번역된 결과값들
+                const translatedCandidates = data?.translation;
 
-            let result = "";
+                let result = "";
 
-            // 번역 응답 API 에 문제가 발생했을 경우
-            if(translatedCandidates == null){
-                result = "번역에 실패하였습니다.";
-            }
-            // 번역된 결과가 없을 경우
-            else if(translatedCandidates.length == 0){
-                result = "번역된 결과가 없습니다.";
-            }
-            // 번역이 되었을 경우
-            else{
+                // 번역 응답 API 에 문제가 발생했을 경우
+                if (translatedCandidates == null) {
+                    result = "번역에 실패하였습니다.";
+                }
+                // 번역된 결과가 없을 경우
+                else if (translatedCandidates.length == 0) {
+                    result = "번역된 결과가 없습니다.";
+                }
+                // 번역이 되었을 경우
+                else {
 
-                // 첫번째 값을 번역된 결과로 서빙
-                result = translatedCandidates[0];
-            }
+                    // 첫번째 값을 번역된 결과로 서빙
+                    result = translatedCandidates[0];
+                }
 
-            addBalloon(result);
-        })
-        .catch(error => {
-            // 번역 API 요청 오류 발생시
-            addBalloon("번역 요청 과정에서 오류가 발생하였습니다.");
-        });
-        
+                addBalloon(result);
+            })
+            .catch(error => {
+                // 번역 API 요청 오류 발생시
+                addBalloon("번역 요청 과정에서 오류가 발생하였습니다.");
+            });
+
     }
 }
 
@@ -92,3 +106,10 @@ document.addEventListener("mouseup", removeBalloon);
 
 // 마우스 이벤트 핸들러를 등록합니다.
 document.addEventListener("mouseup", handleMouseSelection);
+
+// ON/OFF 초기화
+chrome.storage.sync.get("activeState", (data) => {
+    if (data == null || data == undefined || data == "") {
+        chrome.storage.sync.set({ "activeState": "inactive" });
+    }
+});
