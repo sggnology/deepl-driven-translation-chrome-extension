@@ -21,7 +21,7 @@ function translateText() {
 
     const url = `https://translation-proxy.sggnology.workers.dev`;
 
-    const trimmedSelectedText = selectedText.trim();
+    const trimmedSelectedText = selectedText.trim().replace("\\n"," ");
 
     if (trimmedSelectedText !== "" && trimmedSelectedText !== null) {
 
@@ -55,7 +55,7 @@ function translateText() {
                 else {
 
                     // 첫번째 값을 번역된 결과로 서빙
-                    result = translatedCandidates[0];
+                    result = translatedCandidates.join("\\n");
                 }
 
                 addBalloon(result);
@@ -73,13 +73,27 @@ function addBalloon(text) {
     const balloon = document.createElement("div");
     balloon.className = "balloon";
     balloon.style.position = "absolute";
-    balloon.style.maxWidth = "300px";
+    balloon.style.maxWidth = "500px";
     balloon.style.wordBreak = "break-word";
     balloon.style.padding = "10px";
     balloon.style.backgroundColor = "black";
     balloon.style.color = "white";
     balloon.style.borderRadius = "10px"
-    balloon.innerText = text;
+
+    const sentenceList = text.split("\\n");
+
+    if(1 < sentenceList.length){
+        sentenceList.forEach( sentence => {
+
+            const p = document.createElement("p");
+            p.innerText = sentence;
+    
+            balloon.appendChild(p);
+        });
+    }
+    else{
+        balloon.innerText = text;
+    }
 
     // 선택한 텍스트 위에 말풍선을 추가합니다.
     const selectionRange = window.getSelection().getRangeAt(0);
