@@ -71,7 +71,7 @@ function translateText() {
 function addBalloon(text) {
     // 선택된 텍스트에 스타일을 적용하여 말풍선을 생성합니다.
     const balloon = document.createElement("div");
-    balloon.className = "balloon";
+    balloon.id = "translation-readable-balloon";
     balloon.style.position = "absolute";
     balloon.style.maxWidth = "500px";
     balloon.style.wordBreak = "break-word";
@@ -108,7 +108,7 @@ function addBalloon(text) {
 
 // 커서가 해제되면 말풍선을 삭제하는 함수
 function removeBalloon() {
-    const balloon = document.querySelector(".balloon");
+    const balloon = document.querySelector("#translation-readable-balloon");
 
     if (balloon) {
         balloon.remove();
@@ -116,7 +116,7 @@ function removeBalloon() {
 }
 
 // 커서가 해제되면 말풍선을 삭제합니다.
-document.addEventListener("mouseup", removeBalloon);
+document.addEventListener("mousedown", removeBalloon);
 
 // 마우스 이벤트 핸들러를 등록합니다.
 document.addEventListener("mouseup", handleMouseSelection);
