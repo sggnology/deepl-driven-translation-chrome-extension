@@ -72,6 +72,7 @@ function addBalloon(text) {
     // 선택된 텍스트에 스타일을 적용하여 말풍선을 생성합니다.
     const balloon = document.createElement("div");
     balloon.id = "translation-readable-balloon";
+    balloon.style.zIndex = "9999";
     balloon.style.position = "absolute";
     balloon.style.maxWidth = "500px";
     balloon.style.wordBreak = "break-word";
