@@ -2,6 +2,9 @@
 > 문서를 읽다보면 단어 혹은 문장이 어려운 경우가 있습니다.   
 > 그럴 때 마다 검색하는 것이 번거로워 chrome extension 으로 제작하였습니다.
 
+## Chrome Extension 
+- [크롬 익스텐션 링크](https://chromewebstore.google.com/detail/%ED%95%9C%EC%98%81-%EB%B2%88%EC%97%AD%EA%B8%B0/pmaoondhbnlekfhglldllgoeenhcpfge?hl=ko&authuser=0)
+
 ## 제한사항
 - 현재는 CORS 회피를 위해 cloudflare > worker 를 사용하여 일별 요청 제한이 있습니다.
    - 추후 사용자가 많아진다면 사설 server 로 이관할 생각입니다.
