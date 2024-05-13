@@ -12,6 +12,7 @@
                 "<all_urls>"
             ],
             "js": [
+                "./node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
                 "/content/static/translation_balloon_element.js",
                 "/content/content_script.js"
             ]
