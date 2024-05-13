@@ -39,77 +39,58 @@ function translateText() {
             .then(data => {
 
                 // 번역된 결과값들
-                const translatedCandidates = data?.translation;
+                const translationArr = data?.translation;
 
                 let result = "";
 
                 // 번역 응답 API 에 문제가 발생했을 경우
-                if (translatedCandidates == null) {
-                    result = "번역에 실패하였습니다.";
+                if (translationArr == null) {
+                    result = ["번역에 실패하였습니다."];
                 }
                 // 번역된 결과가 없을 경우
-                else if (translatedCandidates.length == 0) {
-                    result = "번역된 결과가 없습니다.";
+                else if (translationArr.length == 0) {
+                    result = ["번역된 결과가 없습니다."];
                 }
                 // 번역이 되었을 경우
                 else {
 
                     // 첫번째 값을 번역된 결과로 서빙
-                    result = translatedCandidates.join("\\n");
+                    result = translationArr;
                 }
 
-                addBalloon(result);
+                addTranslationBalloon(result);
             })
             .catch(error => {
                 // 번역 API 요청 오류 발생시
-                addBalloon("번역 요청 과정에서 오류가 발생하였습니다.");
+                addTranslationBalloon("번역 요청 과정에서 오류가 발생하였습니다.");
             });
 
     }
 }
 
-function addBalloon(text) {
-    // 선택된 텍스트에 스타일을 적용하여 말풍선을 생성합니다.
-    const balloon = document.createElement("div");
-    balloon.id = "translation-readable-balloon";
-    balloon.style.zIndex = "9999";
-    balloon.style.position = "absolute";
-    balloon.style.maxWidth = "500px";
-    balloon.style.wordBreak = "break-word";
-    balloon.style.padding = "10px";
-    balloon.style.backgroundColor = "black";
-    balloon.style.color = "white";
-    balloon.style.borderRadius = "10px"
-
-    const sentenceList = text.split("\\n");
-
-    if(1 < sentenceList.length){
-        sentenceList.forEach( sentence => {
-
-            const p = document.createElement("p");
-            p.innerText = sentence;
-    
-            balloon.appendChild(p);
-        });
-    }
-    else{
-        balloon.innerText = text;
-    }
+function addTranslationBalloon(translationArr) {
 
     // 선택한 텍스트 위에 말풍선을 추가합니다.
     const selectionRange = window.getSelection().getRangeAt(0);
     const selectionRect = selectionRange.getBoundingClientRect();
 
+    const top = `${selectionRect.top + window.scrollY}`;
+    const left = `${selectionRect.left + window.scrollX}`;
+
+    const balloon = document.createElement("translation-balloon-element");
+    balloon.id = "translation-balloon";
+    balloon.setAttribute("translation", JSON.stringify(translationArr));
+    balloon.setAttribute("top", top);
+    balloon.setAttribute("left", left);
+    balloon.setAttribute("rectBottom", selectionRect.bottom ?? 0);
+
     document.body.appendChild(balloon);
 
-    // ballon DOM 의 크기는 DOM 에 포함되고 나서야 크기가 결정된다.
-    balloon.style.top = `${selectionRect.top + window.pageYOffset - balloon.offsetHeight - 10}px`;
-    balloon.style.left = `${selectionRect.left + window.pageXOffset}px`;
 }
 
 // 커서가 해제되면 말풍선을 삭제하는 함수
 function removeBalloon() {
-    const balloon = document.querySelector("#translation-readable-balloon");
+    const balloon = document.querySelector("#translation-balloon");
 
     if (balloon) {
         balloon.remove();

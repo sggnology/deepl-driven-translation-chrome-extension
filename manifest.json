@@ -12,7 +12,8 @@
                 "<all_urls>"
             ],
             "js": [
-                "content_script.js"
+                "/content/static/translation_balloon_element.js",
+                "/content/content_script.js"
             ]
         }
     ],
