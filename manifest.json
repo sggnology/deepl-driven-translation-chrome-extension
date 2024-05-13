@@ -17,6 +17,11 @@
         }
     ],
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "./resource/logo/logo16.png",
+            "48": "./resource/logo/logo48.png",
+            "128": "./resource/logo/logo128.png"
+        }
     }
 }
