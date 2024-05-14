@@ -9,8 +9,6 @@ class TranslationBalloonElement extends HTMLElement {
 
     connectedCallback() {
 
-        console.log("HIHI");
-
         const translationArrStr = this.getAttribute("translation"); // 배열을 double quote 로 감싸진채 가져온다.
         const top = this.getAttribute("top");
         const left = this.getAttribute("left");
