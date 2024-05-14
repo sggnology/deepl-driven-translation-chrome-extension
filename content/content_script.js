@@ -4,67 +4,66 @@
 function handleMouseSelection(event) {
 
     // ON/OFF 상태를 가져옵니다.
-    chrome.storage.sync.get("activeState", (data) => {
+    chrome.storage.sync.get("activeState", async (data) => {
         if (data.activeState === "active") {
             // active 상태일 때만 번역을 실행합니다.
-            translateText();
+            await translateText();
         }
-        else{
+        else {
             return;
         }
     });
 }
 
-function translateText() {
+
+
+async function translateText() {
     // 선택된 텍스트를 가져옵니다.
     let selectedText = window.getSelection().toString();
 
     const url = `https://translation-proxy.sggnology.workers.dev`;
 
-    const trimmedSelectedText = selectedText.trim().replace("\\n"," ");
+    const trimmedSelectedText = selectedText.trim().replace("\\n", " ");
 
     if (trimmedSelectedText !== "" && trimmedSelectedText !== null) {
 
-        let result = "";
+        let result = [];
         const body = { "source": trimmedSelectedText };
 
-        fetch(url, {
-            mode: 'cors',
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            body: JSON.stringify(body)
-        })
-            .then(response => response.json())
-            .then(data => {
+        try {
+            const data = await fetch(url, {
+                mode: 'cors',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                body: JSON.stringify(body)
+            }).then(response => response.json());
 
-                // 번역된 결과값들
-                const translationArr = data?.translation;
+            // 번역된 결과값들
+            const translationArr = data?.translation;
 
-                // 번역 응답 API 에 문제가 발생했을 경우
-                if (translationArr == null) {
-                    result = ["번역에 실패하였습니다."];
-                }
-                // 번역된 결과가 없을 경우
-                else if (translationArr.length == 0) {
-                    result = ["번역된 결과가 없습니다."];
-                }
-                // 번역이 되었을 경우
-                else {
+            // 번역 응답 API 에 문제가 발생했을 경우
+            if (translationArr == null) {
+                result = ["번역에 실패하였습니다."];
+            }
+            // 번역된 결과가 없을 경우
+            else if (translationArr.length == 0) {
+                result = ["번역된 결과가 없습니다."];
+            }
+            // 번역이 되었을 경우
+            else {
 
-                    // 첫번째 값을 번역된 결과로 서빙
-                    result = translationArr;
-                }
+                // 첫번째 값을 번역된 결과로 서빙
+                result = translationArr;
+            }
 
-                // FIXME: async/await 로 처리하여 중복된 addTranslationBallon 메서드 삭제 필요
-                addTranslationBalloon(result);
-            })
-            .catch(error => {
-                // 번역 API 요청 오류 발생시
-                result = ["번역 요청 과정에서 오류가 발생하였습니다."];
-                addTranslationBalloon(result);
-            });
+        } catch (e) {
+            console.error(e);
+            result = ["번역 요청 과정에서 오류가 발생하였습니다."];
+        }
+
+        addTranslationBalloon(result);
 
     }
 }
