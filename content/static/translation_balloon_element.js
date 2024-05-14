@@ -34,8 +34,6 @@ class TranslationBalloonElement extends HTMLElement {
 
     generateBalloonDiv(translationArr) {
 
-        console.log(translationArr)
-
         // 선택된 텍스트에 스타일을 적용하여 말풍선을 생성합니다.
         const balloonDiv = document.createElement("div");
         balloonDiv.style.zIndex = "9999";
