@@ -25,6 +25,7 @@ function translateText() {
 
     if (trimmedSelectedText !== "" && trimmedSelectedText !== null) {
 
+        let result = "";
         const body = { "source": trimmedSelectedText };
 
         fetch(url, {
@@ -41,8 +42,6 @@ function translateText() {
                 // 번역된 결과값들
                 const translationArr = data?.translation;
 
-                let result = "";
-
                 // 번역 응답 API 에 문제가 발생했을 경우
                 if (translationArr == null) {
                     result = ["번역에 실패하였습니다."];
@@ -58,11 +57,13 @@ function translateText() {
                     result = translationArr;
                 }
 
+                // FIXME: async/await 로 처리하여 중복된 addTranslationBallon 메서드 삭제 필요
                 addTranslationBalloon(result);
             })
             .catch(error => {
                 // 번역 API 요청 오류 발생시
-                addTranslationBalloon("번역 요청 과정에서 오류가 발생하였습니다.");
+                result = ["번역 요청 과정에서 오류가 발생하였습니다."];
+                addTranslationBalloon(result);
             });
 
     }
