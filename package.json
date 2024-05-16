@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@webcomponents/webcomponentsjs": "^2.8.0"
+    "@webcomponents/custom-elements": "^1.6.0",
+    "lit": "^3.1.3"
   }
 }
