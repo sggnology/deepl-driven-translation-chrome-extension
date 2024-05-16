@@ -12,8 +12,15 @@
                 "<all_urls>"
             ],
             "js": [
-                "./node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
-                "/content/static/translation_balloon_element.js",
+                "./node_modules/@webcomponents/custom-elements/custom-elements.min.js",
+                "./node_modules/lit/polyfill-support.js",
+                
+                "/content/static/custom_balloon_content_element.js",
+                "/content/static/custom_balloon_element.js",
+
+                "/content/static/balloon_handler.js",
+                "/content/static/translate_handler.js",
+
                 "/content/content_script.js"
             ]
         }
