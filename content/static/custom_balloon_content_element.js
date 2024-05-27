@@ -12,6 +12,7 @@ class CustomBalloonContentElement extends HTMLElement {
     newP.textContent = this.#exceptNewLineIdentitifier(content);
     newP.style.marginTop = "5px";
     newP.style.marginBottom = "5px";
+    newP.style.color = "white";
 
     this.appendChild(newP);
   }
